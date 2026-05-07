@@ -3,186 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Special+Elite&family=Montserrat:wght@300;700&display=swap');
-
         body {
-            background-image: url('paper-background.jpg'); 
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            font-family: 'Montserrat', sans-serif;
+            /* Sin fondo para que sea transparente */
+            background: transparent; 
+            font-family: 'Courier New', Courier, monospace;
             margin: 0;
-            padding: 100px 40px 40px 40px; 
-            color: #2c2c2c;
-            min-height: 100vh;
+            padding: 20px;
+            height: 100vh;
             box-sizing: border-box;
+            /* Quitamos el borde sólido y dejamos algo más sutil */
+            border-right: 1px solid rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .dashboard {
-            display: grid;
-            grid-template-columns: 320px 1fr 320px;
-            gap: 25px;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.08); 
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 25px;
-            padding: 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .perfil-box {
-            text-align: center;
-        }
-
-        .firma-moderna {
-            font-family: 'Homemade Apple', cursive;
-            color: #b91d1d;
-            font-size: 1.6rem;
-            margin-bottom: 20px;
-        }
-
-        .foto-perfil {
-            width: 100%;
-            max-width: 200px;
-            border-radius: 15px;
-            border: 4px solid white;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-            transform: rotate(-1deg);
-            margin-bottom: 20px;
-        }
-
-        .titulo-seccion {
-            font-weight: 700;
-            text-transform: uppercase;
+        h2 { 
+            color: #333; 
+            border-bottom: 2px solid #333; 
+            margin-top: 0; 
+            font-size: 1.2rem;
             letter-spacing: 2px;
-            color: #b91d1d;
-            font-size: 0.75rem;
-            margin-bottom: 15px;
+        }
+
+        ul { list-style-type: none; padding: 0; }
+        li { margin: 15px 0; }
+
+        a { 
+            text-decoration: none; 
+            color: #555; 
+            font-weight: bold; 
             display: block;
+            padding: 8px;
+            border-radius: 5px;
+            transition: 0.3s;
         }
 
-        /* --- ESTADÍSTICAS RÁPIDAS --- */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
+        /* Color al pasar el mouse */
+        a:hover { color: #b91d1d; }
+
+        /* CLASE PARA LA PÁGINA SELECCIONADA */
+        .active {
+            color: #ffffff !important;
+            background-color: #b91d1d; /* Rojo Arjona */
+            box-shadow: 2px 4px 10px rgba(185, 29, 29, 0.3);
         }
 
-        .stat-small {
-            text-align: center;
-            padding: 10px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 15px;
-        }
-
-        .stat-small strong { color: #b91d1d; font-size: 1.2rem; display: block; }
-        .stat-small span { font-size: 0.6rem; text-transform: uppercase; color: #666; }
-
-        /* --- CURIOSIDADES --- */
-        .curiosidad-box {
-            font-family: 'Special Elite', serif;
-            font-size: 0.8rem;
-            line-height: 1.6;
-            color: #444;
-            background: rgba(255,255,255,0.2);
-            padding: 15px;
-            border-radius: 15px;
-            border-right: 4px solid #b91d1d;
-            margin-top: 20px;
-        }
-
-        .btn-action {
-            width: 100%;
-            padding: 12px;
+        .btn-toggle {
+            position: absolute;
+            right: 10px;
+            top: 10px;
             background: #b91d1d;
             color: white;
             border: none;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.8rem;
+            padding: 5px 10px;
             cursor: pointer;
-            transition: 0.3s;
-            margin-top: 20px;
+            font-size: 12px;
+            border-radius: 5px;
+            z-index: 100;
         }
-
-        .btn-action:hover { background: #901616; }
     </style>
 </head>
 <body>
+    <button class="btn-toggle" onclick="toggleMenu()">◀</button>
+    
+    <h2 id="menuTitle">Arjona</h2>
+    <ul id="menuList">
+        <li><a href="introduccion.html" target="contenido" onclick="setActive(this)">1. Introducción</a></li>
+        <li><a href="biografia.html" target="contenido" onclick="setActive(this)">2. Biografía</a></li>
+        <li><a href="discografia.html" target="contenido" onclick="setActive(this)">3. Discografía</a></li>
+        <li><a href="poetica.html" target="contenido" onclick="setActive(this)">4. Estilo Poético</a></li>
+        <li><a href="acerca_de.html" target="contenido" onclick="setActive(this)">5. Acerca de</a></li>
+    </ul>
 
-    <div class="dashboard">
-        
-        <!-- COLUMNA IZQUIERDA: EL ARTISTA -->
-        <div class="glass-card perfil-box">
-            <h1 class="firma-moderna">Ricardo Arjona</h1>
-            <img src="arjona-intro.png" class="foto-perfil" alt="Arjona">
+    <script>
+        let abierto = true;
+
+        // FUNCIÓN PARA CAMBIAR EL COLOR AL SELECCIONAR
+        function setActive(element) {
+            // Quitamos la clase 'active' de todos los enlaces
+            const links = document.querySelectorAll('a');
+            links.forEach(link => link.classList.remove('active'));
             
-            <span class="titulo-seccion">Legado Musical</span>
-            <div class="stats-grid">
-                <div class="stat-small">
-                    <strong>+80M</strong>
-                    <span>Discos Vendidos</span>
-                </div>
-                <div class="stat-small">
-                    <strong>15</strong>
-                    <span>Álbumes</span>
-                </div>
-                <div class="stat-small">
-                    <strong>1</strong>
-                    <span>Grammy</span>
-                </div>
-                <div class="stat-small">
-                    <strong>1</strong>
-                    <span>Latin Grammy</span>
-                </div>
-            </div>
-        </div>
+            // Se la ponemos solo al que hicimos clic
+            element.classList.add('active');
+        }
 
-        <!-- COLUMNA CENTRAL: MÚSICA Y CITA -->
-        <div style="display: flex; flex-direction: column; gap: 25px;">
-            <div class="glass-card" style="padding: 10px;">
-                <span class="titulo-seccion" style="margin: 10px;">Escuchar Ahora</span>
-                <iframe style="border-radius:15px" src="https://open.spotify.com/embed/track/3clS9vS_N2u9MuvW9vNCOK?utm_source=generator0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-            </div>
-
-            <div class="glass-card" style="font-family: 'Special Elite', serif; font-style: italic; text-align: center; color: #444;">
-                "Si el pasado te enseña, bienvenido sea... pero si el pasado te atrasa, déjalo que pase."
-            </div>
-        </div>
-
-        <!-- COLUMNA DERECHA: GENERALIDADES -->
-        <div class="glass-card">
-            <span class="titulo-seccion">¿Sabías qué?</span>
+        function toggleMenu() {
+            const fs = window.parent.document.getElementById('masterFrameset');
+            const btn = document.querySelector('.btn-toggle');
+            const title = document.getElementById('menuTitle');
+            const list = document.getElementById('menuList');
             
-            <div class="curiosidad-box">
-                Ricardo fue un destacado jugador de baloncesto en la selección nacional de Guatemala antes de triunfar en la música.
-            </div>
-
-            <div class="curiosidad-box" style="border-right: none; border-left: 4px solid #b91d1d; margin-top: 15px;">
-                Su primer álbum, "Déjame decir que te amo", fue grabado en 1985, marcando el inicio de una carrera de más de 40 años.
-            </div>
-
-            <div style="margin-top: 25px;">
-                <span class="titulo-seccion">Origen</span>
-                <p style="font-size: 0.85rem; color: #555;">
-                    <strong>Nacimiento:</strong> Jocotenango, Guatemala<br>
-                    <strong>Géneros:</strong> Pop latino, Balada, Rock<br>
-                    <strong>Ocupación:</strong> Cantautor, Músico, Productor
-                </p>
-            </div>
-
-            <button class="btn-action" onclick="location.href='biografia.html'">CONOCER SU HISTORIA</button>
-        </div>
-
-    </div>
-
+            if (abierto) {
+                fs.setAttribute('cols', '60, *'); 
+                btn.innerHTML = "▶";
+                title.style.display = 'none';
+                list.style.display = 'none';
+            } else {
+                fs.setAttribute('cols', '250, *'); 
+                btn.innerHTML = "◀";
+                title.style.display = 'block';
+                list.style.display = 'block';
+            }
+            abierto = !abierto;
+        }
+    </script>
 </body>
 </html>
