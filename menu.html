@@ -4,70 +4,66 @@
     <meta charset="UTF-8">
     <style>
         body {
-            background: transparent; /* Sin fondo */
-            font-family: 'Courier New', Courier, monospace;
+            background: transparent; /* Totalmente transparente para ver el fondo */
+            font-family: 'Montserrat', sans-serif; /* Más moderno como tu imagen */
             margin: 0;
-            padding: 10px 40px;
+            padding: 0;
             display: flex;
-            justify-content: space-between; /* Firma a la izquierda, links a la derecha */
+            justify-content: center; /* Centra el menú como en la referencia */
             align-items: center;
-            height: 100px;
-            box-sizing: border-box;
+            height: 80px;
             overflow: hidden;
         }
 
-        h2 { 
-            color: #b91d1d; 
-            margin: 0; 
-            font-size: 1.5rem;
-            letter-spacing: 3px;
-            border: none;
-        }
-
-        ul { 
-            list-style: none; 
-            padding: 0; 
+        ul {
+            list-style: none;
+            padding: 0;
             margin: 0;
-            display: flex; /* Pone los links uno a la par del otro */
-            gap: 25px;
+            display: flex;
+            gap: 40px; /* Espacio entre palabras */
         }
 
-        a { 
-            text-decoration: none; 
-            color: #555; 
-            font-weight: bold; 
-            font-size: 0.9rem;
-            padding: 8px 15px;
-            border-radius: 20px;
+        a {
+            text-decoration: none;
+            color: #000; /* Texto negro */
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding-bottom: 5px;
             transition: 0.3s;
+            position: relative;
         }
 
-        a:hover { 
-            color: #b91d1d; 
+        /* La línea debajo al pasar el mouse */
+        a:hover {
+            color: #b91d1d;
         }
 
-        /* Clase para la página seleccionada */
+        /* CLASE PARA LA PÁGINA SELECCIONADA (Como tu imagen de Search) */
         .active {
-            color: #fff !important;
-            background-color: #b91d1d;
-            box-shadow: 0 4px 10px rgba(185, 29, 29, 0.2);
+            border-bottom: 3px solid #000; /* Línea negra gruesa abajo */
+            padding-bottom: 2px;
         }
 
-        /* Quitamos el botón de esconder porque arriba ya no estorba tanto, 
-           pero si lo quieres mantener, se puede ajustar */
-        .btn-toggle { display: none; }
+        /* Título Arjona opcional a la izquierda si lo quieres mantener */
+        .brand {
+            position: absolute;
+            left: 40px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
     </style>
 </head>
 <body>
-    
-    <h2>ARJONA</h2>
+
+    <div class="brand">ARJONA</div>
 
     <ul id="menuList">
-        <li><a href="introduccion.html" target="contenido" onclick="setActive(this)" class="active">INTRO</a></li>
-        <li><a href="biografia.html" target="contenido" onclick="setActive(this)">BIO</a></li>
-        <li><a href="discografia.html" target="contenido" onclick="setActive(this)">DISCOS</a></li>
-        <li><a href="poetica.html" target="contenido" onclick="setActive(this)">POÉTICA</a></li>
-        <li><a href="acerca_de.html" target="contenido" onclick="setActive(this)">EQUIPO</a></li>
+        <li><a href="introduccion.html" target="contenido" onclick="setActive(this)" class="active">Home</a></li>
+        <li><a href="biografia.html" target="contenido" onclick="setActive(this)">Biografía</a></li>
+        <li><a href="discografia.html" target="contenido" onclick="setActive(this)">Discografía</a></li>
+        <li><a href="poetica.html" target="contenido" onclick="setActive(this)">Poética</a></li>
+        <li><a href="acerca_de.html" target="contenido" onclick="setActive(this)">Equipo</a></li>
     </ul>
 
     <script>
