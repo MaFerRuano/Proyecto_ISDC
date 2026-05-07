@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <style>
         body {
-            background: transparent; /* Totalmente transparente para ver el fondo */
-            font-family: 'Montserrat', sans-serif; /* Más moderno como tu imagen */
+            background: transparent !important; /* Forzamos transparencia total */
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center; /* Centra el menú como en la referencia */
+            justify-content: center; /* Centra las opciones en la pantalla */
             align-items: center;
-            height: 80px;
+            height: 100px;
             overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
         }
 
         ul {
@@ -20,43 +20,32 @@
             padding: 0;
             margin: 0;
             display: flex;
-            gap: 40px; /* Espacio entre palabras */
+            gap: 40px; /* Espacio entre cada palabra */
         }
 
         a {
             text-decoration: none;
-            color: #000; /* Texto negro */
+            color: #333; /* Color de las palabras */
             font-weight: 700;
             font-size: 1.1rem;
             padding-bottom: 5px;
             transition: 0.3s;
-            position: relative;
+            border-bottom: 3px solid transparent; /* Línea invisible por defecto */
         }
 
-        /* La línea debajo al pasar el mouse */
+        /* Al pasar el mouse, se pone el color rojo de Arjona */
         a:hover {
             color: #b91d1d;
         }
 
-        /* CLASE PARA LA PÁGINA SELECCIONADA (Como tu imagen de Search) */
+        /* Solo la opción seleccionada tendrá la línea negra debajo (estilo Search) */
         .active {
-            border-bottom: 3px solid #000; /* Línea negra gruesa abajo */
-            padding-bottom: 2px;
-        }
-
-        /* Título Arjona opcional a la izquierda si lo quieres mantener */
-        .brand {
-            position: absolute;
-            left: 40px;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bold;
-            letter-spacing: 2px;
+            border-bottom: 3px solid #000 !important;
+            color: #000;
         }
     </style>
 </head>
 <body>
-
-    <div class="brand">ARJONA</div>
 
     <ul id="menuList">
         <li><a href="introduccion.html" target="contenido" onclick="setActive(this)" class="active">Home</a></li>
@@ -68,8 +57,11 @@
 
     <script>
         function setActive(element) {
+            // Quitamos la línea de todos los demás
             const links = document.querySelectorAll('a');
             links.forEach(link => link.classList.remove('active'));
+            
+            // Se la ponemos solo al que presionamos
             element.classList.add('active');
         }
     </script>
