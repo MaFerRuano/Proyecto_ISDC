@@ -1,106 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <style>
-        body {
-            background-color: #f4f1ea; 
-            font-family: 'Helvetica', sans-serif;
-            padding: 20px;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            box-sizing: border-box;
-        }
-
-        h2 { color: #333; border-bottom: 2px solid #333; font-family: 'Courier New', monospace; }
-        
-        ul { list-style-type: none; padding: 0; margin-bottom: 30px; }
-        li { margin: 12px 0; }
-        a { text-decoration: none; color: #555; font-weight: bold; font-family: 'Courier New', monospace; }
-        a:hover { color: #b91d1d; }
-
-        /* --- CONTENEDOR ESTILO PLAYLIST --- */
-        .playlist-card {
-            background-color: #ffffff;
-            border-radius: 30px;
-            padding: 20px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* El Disco Vinilo Gigante cortado a la izquierda */
-        .disco-decorativo {
-            position: absolute;
-            left: -80px; /* Se sale un poco como en tu imagen */
-            top: 20%;
-            width: 160px;
-            height: 160px;
-            background: radial-gradient(circle, #222 0%, #000 40%, #111 50%, #000 70%, #222 100%);
-            border-radius: 50%;
-            z-index: 0;
-            opacity: 0.9;
-            animation: girar 10s linear infinite;
-        }
-
-        .disco-decorativo::after {
-            content: "";
-            position: absolute;
-            top: 35%;
-            left: 35%;
-            width: 30%;
-            height: 30%;
-            background-image: url('arjona-intro.png'); /* Tu imagen en el centro */
-            background-size: cover;
-            border-radius: 50%;
-            border: 2px solid #fff;
-        }
-
-        /* Contenedor del reproductor real */
-        .spotify-wrapper {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 12px;
-            backdrop-filter: blur(5px);
-        }
-
-        .info-header {
-            text-align: right;
-            width: 100%;
-            margin-bottom: 10px;
-            z-index: 1;
-        }
-
-        .info-header span {
-            font-size: 0.7rem;
-            color: #aaa;
-            display: block;
-        }
-
-        @keyframes girar {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-    </style>
-</head>
-<body>
-    <h2>Arjona</h2>
-    <ul>
-        <li><a href="introduccion.html" target="contenido">Home</a></li>
-        <li><a href="biografia.html" target="contenido">Biografía</a></li>
-        <li><a href="discografia.html" target="contenido">Playlist</a></li>
-        <li><a href="acerca_de.html" target="contenido">Equipo</a></li>
-    </ul>
-
-    <div class="playlist-card">
+<div class="playlist-card">
         <div class="info-header">
             <span>@mafer_arjona</span>
             <strong>23k seguidores</strong>
@@ -109,8 +7,15 @@
         <div class="disco-decorativo"></div>
 
         <div class="spotify-wrapper">
-            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3clS9vS_N2u9MuvW9vNCOK?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <iframe 
+                style="border-radius:12px" 
+                src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO0mB6oN?utm_source=generator&theme=0" 
+                width="100%" 
+                height="152" 
+                frameBorder="0" 
+                allowfullscreen="" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                loading="lazy">
+            </iframe>
         </div>
     </div>
-</body>
-</html>
