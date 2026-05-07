@@ -3,89 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Special+Elite&display=swap');
+
         body {
-            background-color: #faf9f6;
-            font-family: 'Garamond', serif;
-            color: #2c2c2c;
-            padding: 40px;
-            line-height: 1.6;
+            background-color: #f4f1ea;
             background-image: radial-gradient(#d1d1d1 0.5px, transparent 0.5px);
-            background-size: 20px 20px; /* Patrón de puntos como papel de dibujo */
+            background-size: 20px 20px;
+            font-family: 'Special Elite', serif;
+            margin: 0;
+            padding: 20px;
+            color: #2c2c2c;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            border-left: 5px solid #b91d1d; /* El rojo Arjona */
-            padding-left: 30px;
+
+        /* --- HEADER: PAPEL RASGADO --- */
+        .banner-rasgado {
+            background: white;
+            padding: 40px;
+            margin-bottom: 30px;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            /* Efecto de borde rasgado con clip-path */
+            clip-path: polygon(0% 0%, 100% 0%, 100% 95%, 95% 100%, 85% 94%, 75% 100%, 65% 94%, 55% 100%, 45% 94%, 35% 100%, 25% 94%, 15% 100%, 5% 94%, 0% 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 200px;
         }
-        h1 {
-            font-family: 'Courier New', monospace;
-            font-size: 3rem;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            letter-spacing: -2px;
+
+        .firma-container {
+            flex: 1;
         }
-        .subtitulo {
+
+        .firma {
+            font-family: 'Homemade Apple', cursive;
+            font-size: 2.5rem;
+            color: #b91d1d;
+            margin: 0;
+        }
+
+        .cita-header {
             font-style: italic;
             color: #666;
-            margin-bottom: 30px;
+            margin-top: 10px;
+            font-size: 1.1rem;
         }
-        p {
-            font-size: 1.2rem;
-            text-align: justify;
+
+        .arjona-png {
+            height: 250px;
+            /* Aquí usamos tu imagen arjona-intro.png */
+            filter: drop-shadow(10px 10px 10px rgba(0,0,0,0.3));
         }
-        .cita {
-            margin-top: 50px;
-            margin-bottom: 30px;
-            font-size: 1.5rem;
-            color: #b91d1d;
-            font-weight: bold;
+
+        /* --- GRID PRINCIPAL --- */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1.2fr;
+            gap: 20px;
+        }
+
+        .col-titulos { font-size: 1.2rem; color: #b91d1d; margin-bottom: 15px; display: block; }
+
+        /* SECCIÓN ARTWORK / POPULAR */
+        .card-popular {
+            background: #fff;
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             text-align: center;
         }
-        .imagen-intro {
-            width: 100%;
-            height: 400px;
+
+        .spotify-fake {
+            background: #282828;
+            border-radius: 15px;
+            padding: 15px;
+            color: white;
+            position: relative;
+        }
+
+        .popular-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(185, 29, 29, 0.8);
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+        }
+
+        .view-more {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 20px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #555;
+            font-size: 0.8rem;
+        }
+
+        /* COLABORACIONES */
+        .colab-item {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            overflow: hidden;
+            gap: 15px;
+            margin-bottom: 15px;
         }
-        .imagen-intro img {
-            width: 100%;
-            height: 100%;
+
+        .colab-img {
+            width: 50px; height: 50px;
+            background: #ddd; border-radius: 50%;
             object-fit: cover;
+        }
+
+        /* INFO CARDS (ESTILO MIKU / BOHEMIO) */
+        .info-box {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid #b91d1d;
+        }
+
+        .num { font-size: 1.5rem; font-weight: bold; color: #b91d1d; margin-right: 10px; }
+
+        .lyrics {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            max-height: 100px;
+            overflow-y: auto;
+            white-space: pre-line;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="imagen-intro">
-        <img src="arjona-intro.png" alt="Ricardo Arjona en el estudio">
+    <!-- HEADER CON FIRMA Y CITA -->
+    <div class="banner-rasgado">
+        <div class="firma-container">
+            <h1 class="firma">Ricardo Arjona</h1>
+            <p class="cita-header">"Si el pasado te enseña, bienvenido sea..."</p>
+        </div>
+        <img src="arjona-intro.png" class="arjona-png" alt="Arjona">
     </div>
 
-    <h1>Ricardo Arjona</h1>
-    <p class="subtitulo">"El animal nocturno que le canta a la realidad cotidiana."</p>
+    <div class="main-grid">
+        
+        <!-- COLUMNA 1: POPULAR -->
+        <div>
+            <span class="col-titulos">Canción Top ></span>
+            <div class="card-popular">
+                <div class="spotify-fake">
+                    <span class="popular-tag">POPULAR</span>
+                    <img src="arjona-intro.png" style="width: 100%; border-radius: 10px;">
+                    <p style="margin: 10px 0 5px 0;">Fuiste Tú</p>
+                    <small style="color: #aaa;">Ricardo Arjona, Gaby Moreno</small>
+                </div>
+                <a href="#" class="view-more">View More</a>
+            </div>
+        </div>
 
-    <p>
-        Bienvenido a este espacio dedicado a explorar la trayectoria, la lírica y el impacto cultural 
-        de uno de los artistas más influyentes y controversiales de América Latina. A través de este 
-        sitio web, realizaremos un viaje por sus letras, su discografía y la esencia de su narrativa 
-        que ha marcado a generaciones.
-    </p>
+        <!-- COLUMNA 2: COLABORACIONES -->
+        <div>
+            <span class="col-titulos">Colaboraciones</span>
+            <div class="colab-item">
+                <div class="colab-img"></div> <span>Gaby Moreno</span>
+            </div>
+            <div class="colab-item">
+                <div class="colab-img"></div> <span>Marc Anthony</span>
+            </div>
+            <div class="colab-item">
+                <div class="colab-img"></div> <span>Fito Páez</span>
+            </div>
+        </div>
 
-    <p>
-        Desde sus inicios en las calles de Guatemala hasta llenar estadios alrededor del mundo, 
-        Ricardo Arjona ha sabido transformar lo ordinario en poesía, y lo cotidiano en historias 
-        que todos hemos vivido alguna vez.
-    </p>
+        <!-- COLUMNA 3: DETALLES FUISTE TU -->
+        <div>
+            <div class="info-box">
+                <span class="num">01</span> <strong>Fuiste Tú</strong>
+                <p style="font-size: 0.8rem; margin: 10px 0;">
+                    Álbum: Independiente (2011)<br>
+                    Duración: 4:32 min<br>
+                    Spotify: 590,405,375 repros
+                </p>
+            </div>
 
-    <div class="cita">
-        "Si el pasado te enseña, bienvenido sea..."
+            <div class="info-box">
+                <span class="num">02</span> <strong>The Singer</strong>
+                <p style="font-size: 0.8rem;">Ricardo Arjona & Gaby Moreno</p>
+            </div>
+
+            <div class="info-box">
+                <span class="num">03</span> <strong>La Letra</strong>
+                <div class="lyrics">
+                    Fuiste tú, tenerte fue una foto tuya puesta en mi cartera,
+                    un beso y una flor un día de primavera,
+                    un nombre dibujado en el vidrio de una ojera...
+                    (Te extraño más que nunca...)
+                </div>
+            </div>
+        </div>
+
     </div>
-</div>
 
 </body>
 </html>
