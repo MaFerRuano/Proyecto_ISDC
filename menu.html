@@ -1,4 +1,135 @@
-<div class="playlist-card">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #f4f1ea; /* Color tipo papel bohemio */
+            font-family: 'Helvetica', sans-serif;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        /* Título del Menú */
+        h2 { 
+            color: #333; 
+            border-bottom: 2px solid #333; 
+            font-family: 'Courier New', monospace; 
+            margin-top: 0;
+            padding-bottom: 10px;
+        }
+        
+        /* Lista de Enlaces */
+        ul { list-style-type: none; padding: 0; margin-bottom: 20px; flex-grow: 1; }
+        li { margin: 12px 0; }
+        a { 
+            text-decoration: none; 
+            color: #555; 
+            font-weight: bold; 
+            font-family: 'Courier New', monospace; 
+            display: block;
+            transition: 0.3s;
+        }
+        a:hover { color: #b91d1d; padding-left: 5px; }
+
+        /* --- CONTENEDOR ESTILO PLAYLIST (EL DISEÑO QUE TE GUSTÓ) --- */
+        .playlist-card {
+            background-color: #ffffff;
+            border-radius: 30px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* El Disco de Vinilo que se asoma por la izquierda */
+        .disco-decorativo {
+            position: absolute;
+            left: -70px; /* Ajustado para el ancho del menú lateral */
+            top: 25%;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, #222 0%, #000 40%, #111 50%, #000 70%, #222 100%);
+            border-radius: 50%;
+            z-index: 0;
+            animation: girar 10s linear infinite;
+        }
+
+        /* La imagen de Arjona en el centro del disco */
+        .disco-decorativo::after {
+            content: "";
+            position: absolute;
+            top: 35%;
+            left: 35%;
+            width: 30%;
+            height: 30%;
+            background-image: url('arjona-intro.png'); 
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+
+        /* Contenedor del reproductor para que flote sobre el disco */
+        .spotify-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            backdrop-filter: blur(4px); /* Efecto de vidrio esmerilado */
+        }
+
+        .info-header {
+            text-align: right;
+            width: 100%;
+            margin-bottom: 10px;
+            z-index: 1;
+            font-family: Arial, sans-serif;
+        }
+
+        .info-header span {
+            font-size: 0.65rem;
+            color: #aaa;
+            display: block;
+        }
+
+        .info-header strong {
+            font-size: 0.8rem;
+            color: #333;
+        }
+
+        /* Animación de giro */
+        @keyframes girar {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Arjona</h2>
+    
+    <ul>
+        <li><a href="introduccion.html" target="contenido">1. Introducción</a></li>
+        <li><a href="biografia.html" target="contenido">2. Biografía</a></li>
+        <li><a href="discografia.html" target="contenido">3. Discografía</a></li>
+        <li><a href="poetica.html" target="contenido">4. Estilo Poético</a></li>
+        <li><a href="galeria.html" target="contenido">5. Galería</a></li>
+        <li><a href="acerca_de.html" target="contenido">6. Acerca de</a></li>
+    </ul>
+
+    <div class="playlist-card">
         <div class="info-header">
             <span>@mafer_arjona</span>
             <strong>23k seguidores</strong>
@@ -9,7 +140,7 @@
         <div class="spotify-wrapper">
             <iframe 
                 style="border-radius:12px" 
-                src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO0mB6oN?utm_source=generator&theme=0" 
+                src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO48YvP0?utm_source=generator&theme=0" 
                 width="100%" 
                 height="152" 
                 frameBorder="0" 
@@ -19,3 +150,6 @@
             </iframe>
         </div>
     </div>
+
+</body>
+</html>
