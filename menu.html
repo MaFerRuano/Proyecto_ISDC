@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <meta charset="UTF-8">
     <style>
         body {
-            background-color: #f4f1ea; /* Un color tipo papel viejo */
+            background-color: #f4f1ea; /* Color tipo papel viejo */
             font-family: 'Courier New', Courier, monospace;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            box-sizing: border-box;
         }
-        h2 { color: #333; border-bottom: 2px solid #333; }
-        ul { list-style-type: none; padding: 0; }
+        h2 { color: #333; border-bottom: 2px solid #333; margin-top: 0; }
+        ul { list-style-type: none; padding: 0; flex-grow: 1; }
         li { margin: 15px 0; }
         a { 
             text-decoration: none; 
@@ -16,11 +22,18 @@
             font-weight: bold; 
             display: block;
         }
-        a:hover { color: #b91d1d; } /* Color rojo Arjona al pasar el mouse */
+        a:hover { color: #b91d1d; } /* Rojo Arjona */
         
-        /* Animación para el vinilo que quieres */
+        .spotify-container {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        /* Estilo para el vinilo que podrías agregar después */
         .vinilo {
-            width: 100px;
+            width: 60px;
+            display: block;
+            margin: 10px auto;
             animation: girar 5s linear infinite;
             border-radius: 50%;
         }
@@ -33,7 +46,6 @@
 <body>
     <h2>Arjona</h2>
     <ul>
-        <!-- El target="contenido" hace que la página abra en el lado derecho -->
         <li><a href="introduccion.html" target="contenido">1. Introducción</a></li>
         <li><a href="biografia.html" target="contenido">2. Biografía</a></li>
         <li><a href="discografia.html" target="contenido">3. Discografía</a></li>
@@ -43,8 +55,10 @@
     </ul>
 
     <hr>
-    <!-- Aquí puedes pegar el código de Spotify que te guste -->
-    <p>Escuchando ahora:</p>
-    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2SId8vO144R7K986m4pWCH?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    
+    <div class="spotify-container">
+        <p style="font-size: 0.8rem; margin-bottom: 5px;">Escuchando ahora:</p>
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/7J6IYudWsxHy3stN5aMKSN?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
 </body>
 </html>
