@@ -3,38 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Special+Elite&display=swap');
+        /* ... (mantén el resto de tus estilos anteriores) ... */
 
-        /* 1. ELIMINAR MÁRGENES DEL BODY PARA QUE TODO LLEGUE AL BORDE */
-        body {
-            background-color: #f4f1ea;
-            background-image: radial-gradient(#d1d1d1 0.5px, transparent 0.5px);
-            background-size: 20px 20px;
-            font-family: 'Special Elite', serif;
-            margin: 0;
-            padding: 0;
-            color: #2c2c2c;
-            overflow-x: hidden; /* Evita el scroll horizontal */
-        }
-
-        /* 2. BANNER DE PAPEL RASGADO A TODO LO ANCHO */
         .banner-rasgado {
-            width: 100%; /* Ancho total */
+            width: 100%;
             min-height: 280px;
             background-image: url('papel-rasgado.png'); 
-            background-size: 100% 100%; /* Se estira para cubrir todo el ancho */
+            background-size: 100% 100%;
             background-repeat: no-repeat;
             display: flex;
-            justify-content: space-between; /* Justifica los elementos a los extremos */
+            justify-content: space-between;
             align-items: center;
-            padding: 0 80px; /* Margen interno para que el texto no toque el borde físico */
+            padding: 0 80px;
             box-sizing: border-box;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            position: relative; /* Para posicionar el tape */
             margin-bottom: 40px;
         }
 
-        .firma-container {
-            flex: 1;
+        /* CONTENEDOR DE LA FOTO PARA EL TAPE */
+        .foto-pegada-container {
+            position: relative;
+            display: inline-block;
+            transform: rotate(5deg); /* Inclinación de la foto */
+            transition: 0.3s;
+        }
+
+        .arjona-png {
+            height: 220px; /* Tamaño más pequeño como pediste */
+            display: block;
+            filter: sepia(0.2) contrast(1.1) drop-shadow(5px 5px 10px rgba(0,0,0,0.2));
+        }
+
+        /* EL TAPE (CINTA ADHESIVA) */
+        .foto-pegada-container::before {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-5deg);
+            width: 80px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.4); /* Color blanco translúcido */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            backdrop-filter: blur(2px); /* Efecto de cinta vieja */
+            border-left: 2px solid rgba(255,255,255,0.1);
+            border-right: 2px solid rgba(255,255,255,0.1);
+            z-index: 20;
+        }
+
+        /* Efecto de bordes rasgados en el tape */
+        .foto-pegada-container::after {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-5deg);
+            width: 80px;
+            height: 30px;
+            background-image: radial-gradient(circle, transparent 50%, rgba(255,255,255,0.1) 50%);
+            background-size: 4px 4px;
+            z-index: 21;
+            opacity: 0.3;
+            pointer-events: none;
         }
 
         .firma {
@@ -44,122 +74,7 @@
             margin: 0;
         }
 
-        .cita-header {
-            font-style: italic;
-            color: #444;
-            margin-top: 15px;
-            font-size: 1.3rem;
-            max-width: 600px;
-        }
-
-        .arjona-png {
-            height: 320px; /* Un poco más grande para que resalte */
-            z-index: 10;
-            transform: rotate(2deg);
-            filter: drop-shadow(10px 10px 15px rgba(0,0,0,0.3));
-        }
-
-        /* --- CONTENEDOR DE LA GRID (CON MARGEN PARA QUE NO TOQUE LOS BORDES) --- */
-        .contenido-inferior {
-            padding: 0 40px 40px 40px;
-        }
-
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1.2fr;
-            gap: 30px;
-        }
-
-        .col-titulos { 
-            font-size: 1.3rem; 
-            color: #b91d1d; 
-            margin-bottom: 20px; 
-            display: block; 
-            border-bottom: 1px solid #ccc;
-        }
-
-        /* TARJETA POPULAR */
-        .card-popular {
-            background: #fff;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            text-align: center;
-        }
-
-        .spotify-fake {
-            background: #282828;
-            border-radius: 15px;
-            padding: 20px;
-            color: white;
-            position: relative;
-        }
-
-        .popular-tag {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #b91d1d;
-            padding: 3px 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .view-more {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 30px;
-            border: 2px solid #b91d1d;
-            border-radius: 50px;
-            text-decoration: none;
-            color: #b91d1d;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .view-more:hover {
-            background: #b91d1d;
-            color: white;
-        }
-
-        /* COLABORACIONES */
-        .colab-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 20px;
-            background: rgba(255,255,255,0.4);
-            padding: 10px;
-            border-radius: 50px;
-        }
-
-        .colab-img {
-            width: 60px; height: 60px;
-            background: #ccc; border-radius: 50%;
-            border: 2px solid white;
-        }
-
-        /* INFO CARDS */
-        .info-box {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-            border-left: 8px solid #b91d1d;
-        }
-
-        .num { font-size: 1.8rem; font-weight: bold; color: #b91d1d; margin-right: 15px; }
-
-        .lyrics {
-            font-size: 0.9rem;
-            line-height: 1.6;
-            max-height: 120px;
-            overflow-y: auto;
-            color: #555;
-            padding-right: 10px;
-        }
+        /* ... (restante de la grid e info-box) ... */
     </style>
 </head>
 <body>
@@ -169,66 +84,11 @@
             <h1 class="firma">Ricardo Arjona</h1>
             <p class="cita-header">"Si el pasado te enseña, bienvenido sea..."</p>
         </div>
-        <img src="arjona-intro.png" class="arjona-png" alt="Arjona">
-    </div>
 
-    <div class="contenido-inferior">
-        <div class="main-grid">
-            
-            <div>
-                <span class="col-titulos">Canción Top ></span>
-                <div class="card-popular">
-                    <div class="spotify-fake">
-                        <span class="popular-tag">POPULAR</span>
-                        <img src="arjona-intro.png" style="width: 100%; border-radius: 10px; filter: grayscale(0.5);">
-                        <p style="margin: 15px 0 5px 0; font-size: 1.2rem;">Fuiste Tú</p>
-                        <small style="color: #888;">Ricardo Arjona, Gaby Moreno</small>
-                    </div>
-                    <a href="#" class="view-more">View More</a>
-                </div>
-            </div>
-
-            <div>
-                <span class="col-titulos">Colaboraciones</span>
-                <div class="colab-item">
-                    <div class="colab-img"></div> <span>Gaby Moreno</span>
-                </div>
-                <div class="colab-item">
-                    <div class="colab-img"></div> <span>Marc Anthony</span>
-                </div>
-                <div class="colab-item">
-                    <div class="colab-img"></div> <span>Fito Páez</span>
-                </div>
-            </div>
-
-            <div>
-                <div class="info-box">
-                    <span class="num">01</span> <strong>Fuiste Tú</strong>
-                    <p style="font-size: 0.9rem; margin-top: 10px;">
-                        Álbum: Independiente (2011)<br>
-                        Duración: 4:32 min<br>
-                        Reproducciones: 590,405,375
-                    </p>
-                </div>
-
-                <div class="info-box">
-                    <span class="num">02</span> <strong>The Singer</strong>
-                    <p style="font-size: 0.9rem;">Ricardo Arjona & Gaby Moreno</p>
-                </div>
-
-                <div class="info-box">
-                    <span class="num">03</span> <strong>La Letra</strong>
-                    <div class="lyrics">
-                        Fuiste tú, tenerte fue una foto tuya puesta en mi cartera,
-                        un beso y una flor un día de primavera,
-                        un nombre dibujado en el vidrio de una ojera...
-                        (Te extraño más que nunca...)
-                    </div>
-                </div>
-            </div>
-
+        <div class="foto-pegada-container">
+            <img src="arjona-intro.png" class="arjona-png" alt="Arjona">
         </div>
     </div>
 
-</body>
+    </body>
 </html>
