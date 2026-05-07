@@ -2,11 +2,29 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Ricardo Arjona - Proyecto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricardo Arjona - Proyecto Oficial</title>
+    <style>
+        /* Este estilo asegura que no haya espacios blancos alrededor de los frames */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #f4f1ea; /* Color base por si la imagen tarda en cargar */
+        }
+    </style>
 </head>
-<!-- Cambiamos 'cols' por 'rows' para que el menú sea horizontal arriba -->
+
 <frameset rows="120, *" border="0" frameborder="0" framespacing="0">
+    
     <frame src="menu.html" name="menu" noresize scrolling="no">
+    
     <frame src="introduccion.html" name="contenido">
+
+    <noframes>
+        <body>
+            <p>Tu navegador no soporta frames. Por favor, actualízalo para ver este sitio dedicado a Ricardo Arjona.</p>
+        </body>
+    </noframes>
 </frameset>
 </html>
