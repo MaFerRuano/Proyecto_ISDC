@@ -13,12 +13,10 @@
 
         html {
             background: transparent !important;
-            background-color: transparent !important;
         }
 
         body {
             background: transparent !important;
-            background-color: transparent !important;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,11 +29,6 @@
             list-style: none;
             display: flex;
             gap: 40px;
-            background: transparent;
-        }
-
-        li {
-            background: transparent;
         }
 
         a {
@@ -46,7 +39,6 @@
             padding-bottom: 5px;
             border-bottom: 3px solid transparent;
             transition: color 0.3s, border-color 0.3s;
-            background: transparent !important;
             display: inline-block;
         }
 
@@ -54,6 +46,7 @@
             color: #b91d1d;
         }
 
+        /* Clase activa con el color rojo Arjona que elegiste */
         a.active {
             color: #b91d1d !important;
             border-bottom: 3px solid #b91d1d !important;
@@ -62,16 +55,19 @@
 </head>
 <body>
     <ul id="menuList">
+        <!-- He corregido el enlace de Equipo para que coincida con equipo.html -->
         <li><a href="introduccion.html" target="contenido" onclick="setActive(this)" class="active">Home</a></li>
         <li><a href="biografia.html" target="contenido" onclick="setActive(this)">Biografía</a></li>
         <li><a href="discografia.html" target="contenido" onclick="setActive(this)">Discografía</a></li>
         <li><a href="poetica.html" target="contenido" onclick="setActive(this)">Poética</a></li>
-        <li><a href="acerca_de.html" target="contenido" onclick="setActive(this)">Equipo</a></li>
+        <li><a href="equipo.html" target="contenido" onclick="setActive(this)">Equipo</a></li>
     </ul>
 
     <script>
         function setActive(element) {
+            // Quitamos la clase 'active' de todos los enlaces
             document.querySelectorAll('a').forEach(link => link.classList.remove('active'));
+            // Se la añadimos al que acabas de presionar
             element.classList.add('active');
         }
     </script>
