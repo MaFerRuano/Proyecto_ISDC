@@ -2,60 +2,63 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            background: transparent;
-        }
-
-        html {
-            background: transparent !important;
         }
 
         body {
-            background: transparent !important;
+            /* Usamos el color de los headers de tus páginas */
+            background-color: #1a1a1a !important; 
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100px;
+            height: 100px; /* Ajustado al tamaño de tu fila en el index */
             overflow: hidden;
-            font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+            /* Misma fuente que Discografía e Introducción */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Línea roja inferior para conectar con el diseño de las páginas */
+            border-bottom: 5px solid #b91d1d; 
         }
 
         ul {
             list-style: none;
             display: flex;
-            gap: 40px;
+            gap: 30px;
         }
 
         a {
             text-decoration: none;
-            color: #2c2c2c;
-            font-weight: 700;
-            font-size: 1.1rem;
-            padding-bottom: 5px;
-            border-bottom: 3px solid transparent;
-            transition: color 0.3s, border-color 0.3s;
-            display: inline-block;
+            color: #ffffff; /* Texto blanco sobre fondo oscuro */
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
         }
 
+        /* Efecto hover: se pone rojo igual que tus listas de álbumes */
         a:hover {
-            color: #b91d1d;
+            color: #ffffff;
+            background-color: #b91d1d;
+            transform: scale(1.05);
         }
 
-        /* Clase activa con el color rojo Arjona que elegiste */
+        /* Clase activa: resalta en qué página estás */
         a.active {
-            color: #b91d1d !important;
-            border-bottom: 3px solid #b91d1d !important;
+            background-color: #b91d1d !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
     </style>
 </head>
 <body>
     <ul id="menuList">
-        <!-- He corregido el enlace de Equipo para que coincida con equipo.html -->
         <li><a href="introduccion.html" target="contenido" onclick="setActive(this)" class="active">Home</a></li>
         <li><a href="biografia.html" target="contenido" onclick="setActive(this)">Biografía</a></li>
         <li><a href="discografia.html" target="contenido" onclick="setActive(this)">Discografía</a></li>
@@ -65,9 +68,7 @@
 
     <script>
         function setActive(element) {
-            // Quitamos la clase 'active' de todos los enlaces
             document.querySelectorAll('a').forEach(link => link.classList.remove('active'));
-            // Se la añadimos al que acabas de presionar
             element.classList.add('active');
         }
     </script>
