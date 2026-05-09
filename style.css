@@ -43,7 +43,7 @@ body {
     padding: 30px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
     margin-bottom: 25px;
-    /* Franja roja característica de tu bio-section original */
+    /* Franja roja */
     border-left: 8px solid var(--rojo-arjona); 
     transition: transform 0.3s ease;
 }
@@ -52,7 +52,7 @@ body {
     transform: translateY(-5px);
 }
 
-/* Títulos con el Rojo Arjona solicitado */
+/* Títulos con el Rojo Arjona */
 h1, h2, h3 {
     color: var(--rojo-arjona);
     text-transform: uppercase;
@@ -75,7 +75,7 @@ h1, h2, h3 {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Efecto hover basado en tu código anterior */
+/* Efecto hover */
 .item-lista:hover {
     background: var(--rojo-arjona);
     color: #ffffff;
