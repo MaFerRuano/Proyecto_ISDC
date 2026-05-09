@@ -16,7 +16,7 @@
    CONFIGURACIÓN BASE
    ========================================= */
 body {
-    background-image: url('paper-background.jpg'); /* Tu imagen de papel */
+    background-image: url('paper-background.jpg'); /* Imagen de papel */
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
