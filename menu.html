@@ -11,7 +11,7 @@
         }
 
         body {
-            /* Manteniendo el codigo CSS intacto */
+            /* Manteniendo el codigo CSS */
             background-color: #1a1a1a !important; 
             display: flex;
             justify-content: center;
@@ -22,9 +22,8 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             /* Linea roja inferior para conectar con el diseño de las paginas */
             border-bottom: 5px solid #b91d1d; 
-            
-            /* NOTA MAFER: Agregamos relative al body para poder ubicar el icono a la derecha sin mover el centro del menú */
-            position: relative; 
+            /* NOTA: Relative para anclar el botón de usuario a la derecha sin arruinar mi centrado */
+            position: relative;
         }
 
         ul {
@@ -60,10 +59,10 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* --- NOTA MAFER: ESTILOS DEL DROPDOWN Y EL ICONO VECTORIAL --- */
+        /* NOTA: Estilos del menú de usuario a la derecha */
         .user-menu-container {
             position: absolute;
-            right: 40px; /* Lo pegamos a la derecha */
+            right: 40px;
         }
 
         .vector-avatar-btn {
@@ -71,8 +70,6 @@
             border: none;
             cursor: pointer;
             display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 5px;
             transition: transform 0.2s ease;
         }
@@ -81,14 +78,13 @@
             transform: scale(1.1);
         }
 
-        /* Se pone blanco al pasar el mouse por encima */
         .vector-avatar-btn:hover svg path {
-            fill: #ffffff; 
+            fill: #ffffff; /* Se pone blanco al pasar el mouse */
         }
 
-        /* La cajita gris que se despliega */
+        /* NOTA: El recuadro flotante para cerrar sesión */
         .dropdown-box {
-            display: none; /* Oculto por defecto */
+            display: none;
             position: absolute;
             right: 0;
             top: 50px;
@@ -100,7 +96,6 @@
             z-index: 99999;
         }
 
-        /* Clase especial para mostrar el menú con JavaScript */
         .dropdown-box.show {
             display: block;
         }
@@ -110,8 +105,6 @@
             background: none;
             border: none;
             padding: 14px 16px;
-            text-decoration: none;
-            display: block;
             width: 100%;
             text-align: left;
             font-weight: bold;
@@ -119,7 +112,6 @@
             text-transform: uppercase;
             cursor: pointer;
             font-family: inherit;
-            transition: background-color 0.2s;
         }
 
         .dropdown-box button:hover {
@@ -149,39 +141,33 @@
     </div>
 
     <script>
-        // Inicialización de Supabase
+        // NOTA: Cambié el nombre a clienteSupabase para que no choque con la librería y rompa el código
         const SUPABASE_URL = 'https://mgbzmaiiplcvujzcqxan.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_OFv41HzOqNPVwWlmZHNOUQ_ojBYoFO0';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const clienteSupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // Tu función original, que remueve y agrega la clase al instante del clic
         function setActive(element) {
+            // NOTA: Quita lo rojo de todos y se lo pone al que le di clic
             document.querySelectorAll('a').forEach(link => link.classList.remove('active'));
             element.classList.add('active');
         }
 
-        // NOTA MAFER: Función para abrir/cerrar el dropdown de forma segura
         function toggleMenu(event) {
-            event.stopPropagation(); // Impide que el clic se bloquee
+            event.stopPropagation();
             document.getElementById("dropdownMenu").classList.toggle("show");
         }
 
-        // NOTA MAFER: Cerrar el dropdown si se hace clic en cualquier otro lado de la barra negra
         window.onclick = function(event) {
-            // Verifica si el clic NO fue en el icono
             if (!event.target.closest('.vector-avatar-btn')) {
-                var dropdowns = document.getElementsByClassName("dropdown-box");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    if (dropdowns[i].classList.contains('show')) {
-                        dropdowns[i].classList.remove('show');
-                    }
+                var dropdown = document.getElementById("dropdownMenu");
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
                 }
             }
         }
 
-        // Función de salida
         async function logout() {
-            await supabase.auth.signOut();
+            await clienteSupabase.auth.signOut();
             window.top.location.href = 'index.html'; 
         }
     </script>
