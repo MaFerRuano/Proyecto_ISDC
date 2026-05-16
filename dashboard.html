@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ricardo Arjona - Proyecto Oficial</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const supabase = supabase.createClient('https://mgbzmaiiplcvujzcqxan.supabase.co', 'sb_publishable_OFv41HzOqNPVwWlmZHNOUQ_ojBYoFO0');
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            if (!session) {
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</head>
+<frameset rows="120, *" border="0" frameborder="0" framespacing="0">
+    <frame src="menu.html" name="menu" noresize scrolling="no">
+    <frame src="introduccion.html" name="contenido">
+    <noframes>
+        <body><p>Tu navegador no soporta marcos.</p></body>
+    </noframes>
+</frameset>
+</html>
