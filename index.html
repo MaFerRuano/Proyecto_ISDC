@@ -2,44 +2,13 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ricardo Arjona - Proyecto Oficial</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-
-<script>
-    const SUPABASE_URL = 'https://mgbzmaiiplcvujzcqxan.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_OFv41HzOqNPVwWlmZHNOUQ_ojBYoFO0';
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    // Verificamos el estado de la sesión de Google de forma inmediata
-    supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session) {
-            // SI ESTÁ LOGUEADO: Construimos los marcos originales de tu proyecto
-            document.open();
-            document.write(`
-                <frameset rows="120, *" border="0" frameborder="0" framespacing="0">
-                    <frame src="menu.html" name="menu" noresize scrolling="no">
-                    <frame src="introduccion.html" name="contenido">
-                </frameset>
-            `);
-            document.close();
-        } else {
-            // SI NO ESTÁ LOGUEADO: Lo forzamos a ver la pantalla de bienvenida
-            document.open();
-            document.write(`
-                <frameset rows="*" border="0" frameborder="0" framespacing="0">
-                    <frame src="login.html" name="contenido">
-                </frameset>
-            `);
-            document.close();
-        }
-    });
-</script>
-
-<noscript>
-    <body style="background-color: #2c2c2c; color: white; font-family: sans-serif; text-align: center; padding-top: 50px;">
-        <p>Por favor, habilita JavaScript para ingresar al proyecto de Ricardo Arjona.</p>
-    </body>
-</noscript>
+<frameset rows="120, *" border="0" frameborder="0" framespacing="0">
+    <frame src="menu.html" name="menu" noresize scrolling="no">
+    <frame src="introduccion.html" name="contenido">
+    <noframes>
+        <body><p>Tu navegador no soporta frames.</p></body>
+    </noframes>
+</frameset>
 </html>
