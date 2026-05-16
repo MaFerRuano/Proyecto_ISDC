@@ -4,76 +4,17 @@
     <meta charset="UTF-8">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: #1a1a1a !important; 
-            display: flex;
-            justify-content: space-between; 
-            align-items: center;
-            padding: 0 40px;
-            height: 100px; 
-            overflow: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            border-bottom: 5px solid #b91d1d; 
-        }
-
-        .spacer { width: 140px; }
-
-        ul {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-        }
-
-        a {
-            text-decoration: none;
-            color: #ffffff; 
-            font-weight: bold;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 10px 15px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        a:hover, a.active {
-            color: #ffffff;
-            background-color: #b91d1d;
-            transform: scale(1.05);
-        }
-
-        .btn-google {
-            background-color: #ffffff;
-            color: #1a1a1a;
-            border: none;
-            padding: 10px 18px;
-            font-weight: bold;
-            font-size: 0.85rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-            width: 140px;
-            text-align: center;
-        }
-
-        .btn-google:hover {
-            background-color: #b91d1d;
-            color: #ffffff;
-        }
+        body { background-color: #1a1a1a; margin: 0; display: flex; justify-content: space-between; align-items: center; padding: 0 40px; height: 115px; border-bottom: 5px solid #b91d1d; font-family: 'Segoe UI', sans-serif; }
+        ul { list-style: none; display: flex; gap: 15px; }
+        a { text-decoration: none; color: white; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; padding: 10px 12px; border-radius: 4px; transition: 0.3s; }
+        a:hover, a.active { background-color: #b91d1d; }
+        .btn-auth { background: white; color: #1a1a1a; border: none; padding: 10px 20px; font-weight: bold; border-radius: 4px; cursor: pointer; text-transform: uppercase; }
+        .user-info { color: white; font-size: 0.8rem; margin-right: 10px; display: none; }
     </style>
 </head>
 <body>
-
-    <div class="spacer" id="userLeftSpace"></div>
-
-    <ul id="menuList">
+    <div style="color: #b91d1d; font-weight: bold; font-size: 1.2rem;">ARJONA</div>
+    <ul>
         <li><a href="introduccion.html" target="contenido" onclick="setActive(this)" class="active">Home</a></li>
         <li><a href="biografia.html" target="contenido" onclick="setActive(this)">Biografía</a></li>
         <li><a href="discografia.html" target="contenido" onclick="setActive(this)">Discografía</a></li>
@@ -81,55 +22,39 @@
         <li><a href="poetica.html" target="contenido" onclick="setActive(this)">Poética</a></li>
         <li><a href="equipo.html" target="contenido" onclick="setActive(this)">Equipo</a></li>
     </ul>
-
-    <button class="btn-google" id="authBtn" onclick="handleAuth()">Login</button>
+    <div>
+        <span id="userName" class="user-info"></span>
+        <button id="authBtn" class="btn-auth" onclick="handleAuth()">Login Google</button>
+    </div>
 
     <script>
-        const SUPABASE_URL = 'https://mgbzmaiiplcvujzcqxan.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_OFv41HzOqNPVwWlmZHNOUQ_ojBYoFO0';
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
+        const supabase = supabase.createClient('https://mgbzmaiiplcvujzcqxan.supabase.co', 'sb_publishable_OFv41HzOqNPVwWlmZHNOUQ_ojBYoFO0');
+        
         function setActive(element) {
             document.querySelectorAll('a').forEach(link => link.classList.remove('active'));
             element.classList.add('active');
         }
 
-        // Detecta el estado de autenticación real al cargar la barra de menú
+        async function handleAuth() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                await supabase.auth.signOut();
+                window.parent.location.reload();
+            } else {
+                await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: 'https://maferruano.github.io/Proyecto_ISDC/' } });
+            }
+        }
+
         supabase.auth.onAuthStateChange((event, session) => {
             const btn = document.getElementById('authBtn');
             if (session) {
                 btn.innerHTML = "Logout";
-                btn.style.backgroundColor = "#b91d1d";
-                btn.style.color = "#ffffff";
+                btn.style.background = "#b91d1d"; btn.style.color = "white";
             } else {
                 btn.innerHTML = "Login Google";
-                btn.style.backgroundColor = "#ffffff";
-                btn.style.color = "#1a1a1a";
-                
-                // Si no hay sesión en el menú, bloquea el frame inferior mandándolo a una pantalla vacía o login
-                if(window.parent.document.getElementsByName('contenido')[0]) {
-                     window.parent.document.getElementsByName('contenido')[0].src = "about:blank";
-                }
+                btn.style.background = "white"; btn.style.color = "#1a1a1a";
             }
         });
-
-        async function handleAuth() {
-            const { data: { session } } = await supabase.auth.getSession();
-            
-            if (session) {
-                // Si ya está logueado, el botón funciona como cerrar sesión
-                await supabase.auth.signOut();
-                window.parent.location.reload();
-            } else {
-                // Si no está logueado, inicia el flujo OAuth con Google
-                await supabase.auth.signInWithOAuth({
-                    provider: 'google',
-                    options: {
-                        redirectTo: 'https://maferruano.github.io/Proyecto_ISDC/'
-                    }
-                });
-            }
-        }
     </script>
 </body>
 </html>
