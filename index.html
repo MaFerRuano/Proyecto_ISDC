@@ -76,26 +76,36 @@
         <button class="btn-google" onclick="login()">Iniciar Sesión con Google</button>
     </div>
 
-    <script>
-        const SUPABASE_URL = 'https://mgbzmaiiplcvujzcqxan.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_OFv41HzOqNPVwWlmZHNOUQ_ojBYoFO0';
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+   <script>
+    const SUPABASE_URL = 'https://mgbzmaiiplcvujzcqxan.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_OFv41HzOqNPVwWlmZHNOUQ_ojBYoFO0';
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // Si ya hay una sesión activa, mandamos al usuario directo al proyecto sin escalas
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            if (session) {
-                window.location.href = 'dashboard.html';
+    // Si ya hay una sesión activa, mandamos al usuario directo al proyecto
+    supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) {
+            window.location.href = 'dashboard.html';
+        }
+    });
+
+    async function login() {
+        console.log("Iniciando proceso de login...");
+        const { error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                /* CAMBIO CLAVE: Quitamos los pop-ups que bloquea el navegador 
+                   y forzamos a la pestaña actual a viajar de forma segura */
+                redirectTo: 'https://maferruano.github.io/Proyecto_ISDC/dashboard.html',
+                queryParams: {
+                    prompt: 'select_account' // Esto obliga a Google a pedirte con qué cuenta entrar siempre
+                }
             }
         });
-
-        async function login() {
-            await supabase.auth.signInWithOAuth({
-                provider: 'google',
-                options: {
-                    redirectTo: 'https://maferruano.github.io/Proyecto_ISDC/dashboard.html' // Redirige directo al dashboard al terminar
-                }
-            });
+        
+        if (error) {
+            alert('Error de conexión: ' + error.message);
         }
-    </script>
+    }
+</script>
 </body>
 </html>
