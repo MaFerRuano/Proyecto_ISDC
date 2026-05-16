@@ -6,7 +6,6 @@
     <title>Ricardo Arjona - Proyecto Oficial</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        /* Estilos para la pantalla de Login que cubre todo al inicio */
         html, body {
             margin: 0;
             padding: 0;
@@ -80,54 +79,52 @@
     </style>
 </head>
 
-<div id="loginScreen">
-    <div class="login-box">
-        <h1>Bienvenido</h1>
-        <p>Al Mundo de Ricardo Arjona</p>
-        <button class="btn-google" onclick="login()">Iniciar Sesión con Google</button>
-    </div>
-</div>
-
-<frameset rows="120, *" border="0" frameborder="0" framespacing="0" id="mainProject" style="display: none;">
-    <frame src="menu.html" name="menu" noresize scrolling="no">
-    <frame src="introduccion.html" name="contenido">
-    <noframes>
-        <body><p>Tu navegador no soporta marcos.</p></body>
-    </noframes>
-</frameset>
-
 <script>
-    // Inicialización de Supabase con tus credenciales
     const SUPABASE_URL = 'https://mgbzmaiiplcvujzcqxan.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_OFv41HzOqNPVwWlmZHNOUQ_ojBYoFO0';
     const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // Evaluamos la sesión inmediatamente al cargar
+    // Evaluamos la sesión inmediatamente al cargar la página
     supabase.auth.getSession().then(({ data: { session } }) => {
-        evaluateAccess(session);
+        renderPage(session);
     });
 
-    // Escuchamos cambios de estado de sesión
-    supabase.auth.onAuthStateChange((event, session) => {
-        evaluateAccess(session);
-    });
-
-    function evaluateAccess(session) {
-        const loginScreen = document.getElementById('loginScreen');
-        const mainProject = document.getElementById('mainProject');
-
+    function renderPage(session) {
         if (session) {
-            // Si está logueado: ocultamos el login y mostramos los marcos originales
-            if (loginScreen) loginScreen.style.setProperty('display', 'none', 'important');
-            if (mainProject) mainProject.style.display = 'block';
+            // SI ESTÁ LOGUEADO: Renderiza los marcos directamente de forma limpia
+            document.open();
+            document.write(`
+                <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Ricardo Arjona - Proyecto Oficial</title>
+                </head>
+                <frameset rows="120, *" border="0" frameborder="0" framespacing="0">
+                    <frame src="menu.html" name="menu" noresize scrolling="no">
+                    <frame src="introduccion.html" name="contenido">
+                </frameset>
+                </html>
+            `);
+            document.close();
         } else {
-            // Si no está logueado: mostramos el login y nos aseguramos de que los marcos no se vean
-            if (mainProject) mainProject.style.display = 'none';
-            if (loginScreen) loginScreen.style.setProperty('display', 'flex', 'important');
+            // SI NO ESTÁ LOGUEADO: Crea un body temporal con la interfaz de login limpia
+            document.open();
+            document.write(`
+                <div id="loginScreen">
+                    <div class="login-box">
+                        <h1>Bienvenido</h1>
+                        <p>Al Mundo de Ricardo Arjona</p>
+                        <button class="btn-google" onclick="window.login()">Iniciar Sesión con Google</button>
+                    </div>
+                </div>
+            `);
+            document.close();
         }
     }
 
-    async function login() {
+    // Dejamos la función global adjunta a window para asegurar que responda al clic sin fallas
+    window.login = async function() {
         await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
