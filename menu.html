@@ -103,8 +103,10 @@
 
         async function logout() {
             await supabase.auth.signOut();
-            // Recarga el sitio web completo desde la raíz para volver a activar el muro de login al instante
-            window.parent.location.reload(); 
+            /* CAMBIO CLAVE: Redirige la ventana padre (completa) directo a index.html.
+               Esto limpia los marcos y fuerza a mostrar la pantalla de login sin errores grises.
+            */
+            window.parent.location.href = 'index.html'; 
         }
     </script>
 </body>
