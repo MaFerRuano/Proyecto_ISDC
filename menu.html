@@ -1,60 +1,45 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        body { background-color: #1a1a1a; margin: 0; display: flex; justify-content: space-between; align-items: center; padding: 0 40px; height: 115px; border-bottom: 5px solid #b91d1d; font-family: 'Segoe UI', sans-serif; }
-        ul { list-style: none; display: flex; gap: 15px; }
-        a { text-decoration: none; color: white; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; padding: 10px 12px; border-radius: 4px; transition: 0.3s; }
-        a:hover, a.active { background-color: #b91d1d; }
-        .btn-auth { background: white; color: #1a1a1a; border: none; padding: 10px 20px; font-weight: bold; border-radius: 4px; cursor: pointer; text-transform: uppercase; }
-        .user-info { color: white; font-size: 0.8rem; margin-right: 10px; display: none; }
-    </style>
-</head>
-<body>
-    <div style="color: #b91d1d; font-weight: bold; font-size: 1.2rem;">ARJONA</div>
-    <ul>
-        <li><a href="introduccion.html" target="contenido" onclick="setActive(this)" class="active">Home</a></li>
-        <li><a href="biografia.html" target="contenido" onclick="setActive(this)">Biografía</a></li>
-        <li><a href="discografia.html" target="contenido" onclick="setActive(this)">Discografía</a></li>
-        <li><a href="galeria.html" target="contenido" onclick="setActive(this)">Galería</a></li>
-        <li><a href="poetica.html" target="contenido" onclick="setActive(this)">Poética</a></li>
-        <li><a href="equipo.html" target="contenido" onclick="setActive(this)">Equipo</a></li>
-    </ul>
-    <div>
-        <span id="userName" class="user-info"></span>
-        <button id="authBtn" class="btn-auth" onclick="handleAuth()">Login Google</button>
-    </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <script>
-        const supabase = supabase.createClient('https://mgbzmaiiplcvujzcqxan.supabase.co', 'sb_publishable_OFv41HzOqNPVwWlmZHNOUQ_ojBYoFO0');
+<script>
+    const SUPABASE_URL = 'https://mgbzmaiiplcvujzcqxan.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_OFv41HzOqNPVwWlmZHNOUQ_ojBYoFO0';
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    function setActive(element) {
+        document.querySelectorAll('a').forEach(link => link.classList.remove('active'));
+        element.classList.add('active');
+    }
+
+    // Monitorear la sesión
+    supabase.auth.onAuthStateChange((event, session) => {
+        const btn = document.getElementById('authBtn');
+        const menuList = document.getElementById('menuList');
         
-        function setActive(element) {
-            document.querySelectorAll('a').forEach(link => link.classList.remove('active'));
-            element.classList.add('active');
+        if (session) {
+            btn.innerHTML = "Logout";
+            btn.style.backgroundColor = "#b91d1d";
+            btn.style.color = "#ffffff";
+            if(menuList) menuList.style.pointerEvents = "auto"; // Activa los clics
+        } else {
+            btn.innerHTML = "Login Google";
+            btn.style.backgroundColor = "#ffffff";
+            btn.style.color = "#1a1a1a";
+            if(menuList) menuList.style.pointerEvents = "none"; // Bloquea los clics si no hay login
         }
+    });
 
-        async function handleAuth() {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) {
-                await supabase.auth.signOut();
-                window.parent.location.reload();
-            } else {
-                await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: 'https://maferruano.github.io/Proyecto_ISDC/' } });
-            }
+    async function handleAuth() {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+            await supabase.auth.signOut();
+            window.parent.location.reload(); // Recarga todo el sitio al salir
+        } else {
+            await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: 'https://maferruano.github.io/Proyecto_ISDC/'
+                }
+            });
         }
-
-        supabase.auth.onAuthStateChange((event, session) => {
-            const btn = document.getElementById('authBtn');
-            if (session) {
-                btn.innerHTML = "Logout";
-                btn.style.background = "#b91d1d"; btn.style.color = "white";
-            } else {
-                btn.innerHTML = "Login Google";
-                btn.style.background = "white"; btn.style.color = "#1a1a1a";
-            }
-        });
-    </script>
-</body>
-</html>
+    }
+</script>
