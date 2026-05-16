@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * {
             margin: 0;
@@ -10,68 +11,124 @@
         }
 
         body {
-            /* Manteniendo el codigo CSS */
             background-color: #1a1a1a !important; 
             display: flex;
-            justify-content: center;
+            justify-content: space-between; 
             align-items: center;
-            height: 100px; /* Ajustado al tamaño de la fila en el index */
+            padding: 0 40px;
+            height: 100px; 
             overflow: hidden;
-            /* Misma fuente que las otras paginas */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* Linea roja inferior para conectar con el diseño de las paginas */
             border-bottom: 5px solid #b91d1d; 
         }
+
+        .spacer { width: 140px; }
 
         ul {
             list-style: none;
             display: flex;
-            gap: 30px;
+            gap: 20px;
         }
 
         a {
             text-decoration: none;
-            color: #ffffff; /* Texto blanco sobre fondo oscuro */
+            color: #ffffff; 
             font-weight: bold;
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            padding: 10px 20px;
+            padding: 10px 15px;
             border-radius: 4px;
             transition: all 0.3s ease;
-            border: 1px solid transparent;
         }
 
-        /* Efecto hover: se pone rojo */
-        a:hover {
+        a:hover, a.active {
             color: #ffffff;
             background-color: #b91d1d;
             transform: scale(1.05);
         }
 
-        /* Clase activa: resalta en que pagina se esta */
-        a.active {
-            background-color: #b91d1d !important;
-            color: #ffffff !important;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        .btn-google {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            border: none;
+            padding: 10px 18px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            width: 140px;
+            text-align: center;
+        }
+
+        .btn-google:hover {
+            background-color: #b91d1d;
+            color: #ffffff;
         }
     </style>
 </head>
 <body>
+
+    <div class="spacer" id="userLeftSpace"></div>
+
     <ul id="menuList">
         <li><a href="introduccion.html" target="contenido" onclick="setActive(this)" class="active">Home</a></li>
         <li><a href="biografia.html" target="contenido" onclick="setActive(this)">Biografía</a></li>
         <li><a href="discografia.html" target="contenido" onclick="setActive(this)">Discografía</a></li>
-        <!-- Nuevo botón agregado -->
         <li><a href="galeria.html" target="contenido" onclick="setActive(this)">Galería</a></li>
         <li><a href="poetica.html" target="contenido" onclick="setActive(this)">Poética</a></li>
         <li><a href="equipo.html" target="contenido" onclick="setActive(this)">Equipo</a></li>
     </ul>
 
+    <button class="btn-google" id="authBtn" onclick="handleAuth()">Login</button>
+
     <script>
+        const SUPABASE_URL = 'https://mgbzmaiiplcvujzcqxan.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_OFv41HzOqNPVwWlmZHNOUQ_ojBYoFO0';
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
         function setActive(element) {
             document.querySelectorAll('a').forEach(link => link.classList.remove('active'));
             element.classList.add('active');
+        }
+
+        // Detecta el estado de autenticación real al cargar la barra de menú
+        supabase.auth.onAuthStateChange((event, session) => {
+            const btn = document.getElementById('authBtn');
+            if (session) {
+                btn.innerHTML = "Logout";
+                btn.style.backgroundColor = "#b91d1d";
+                btn.style.color = "#ffffff";
+            } else {
+                btn.innerHTML = "Login Google";
+                btn.style.backgroundColor = "#ffffff";
+                btn.style.color = "#1a1a1a";
+                
+                // Si no hay sesión en el menú, bloquea el frame inferior mandándolo a una pantalla vacía o login
+                if(window.parent.document.getElementsByName('contenido')[0]) {
+                     window.parent.document.getElementsByName('contenido')[0].src = "about:blank";
+                }
+            }
+        });
+
+        async function handleAuth() {
+            const { data: { session } } = await supabase.auth.getSession();
+            
+            if (session) {
+                // Si ya está logueado, el botón funciona como cerrar sesión
+                await supabase.auth.signOut();
+                window.parent.location.reload();
+            } else {
+                // Si no está logueado, inicia el flujo OAuth con Google
+                await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: 'https://maferruano.github.io/Proyecto_ISDC/'
+                    }
+                });
+            }
         }
     </script>
 </body>
