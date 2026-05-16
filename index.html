@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bienvenido | Ricardo Arjona Project</title>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/supabase/2.39.8/supabase.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
     <style>
         html, body {
@@ -82,17 +82,17 @@
         const SUPABASE_URL = 'https://mgbzmaiiplcvujzcqxan.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_OFv41HzOqNPVwWlmZHNOUQ_ojBYoFO0';
         
-        // CORRECCIÓN: Una sola declaración limpia usando la ventana global
+        // Inicialización limpia usando el objeto global nativo
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // Validar si ya hay sesión iniciada para saltar al dashboard
+        // Si ya hay sesión activa, saltamos directo a tus marcos
         supabaseClient.auth.getSession().then(({ data: { session } }) => {
             if (session) {
                 window.location.href = 'dashboard.html';
             }
         });
 
-        // Escucha del clic sin duplicados
+        // Disparador del botón de Google sin interferencias
         document.getElementById('btnGoogleAuth').addEventListener('click', async () => {
             const { error } = await supabaseClient.auth.signInWithOAuth({
                 provider: 'google',
@@ -105,7 +105,7 @@
             });
             
             if (error) {
-                alert('Error de Supabase: ' + error.message);
+                alert('Error al conectar con Supabase: ' + error.message);
             }
         });
     </script>
