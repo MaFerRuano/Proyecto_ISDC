@@ -14,7 +14,7 @@
         body {
             background-color: #1a1a1a !important; 
             display: flex;
-            /* Distribuye: Título Izquierda, Menú Centro, Perfil Derecha */
+            /* Alinea los enlaces a la izquierda y el perfil a la derecha de forma limpia */
             justify-content: space-between; 
             align-items: center;
             padding: 0 40px;
@@ -22,15 +22,6 @@
             overflow: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             border-bottom: 5px solid #b91d1d; 
-        }
-
-        .logo {
-            color: #b91d1d; 
-            font-weight: bold; 
-            font-size: 1.2rem; 
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            width: 150px; /* Ancho fijo para equilibrar el espacio con el perfil */
         }
 
         ul {
@@ -59,35 +50,32 @@
             transform: scale(1.05);
         }
 
-        /* Clase activa corregida para mantener el color en la página actual */
+        /* Clase activa para mantener el color en la página actual */
         a.active {
             background-color: #b91d1d !important;
             color: #ffffff !important;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* CONTENEDOR DEL MENÚ DE USUARIO DESPLEGABLE (DROPDOWN) */
+        /* CONTENEDOR DEL MENÚ DE USUARIO DESPLEGABLE */
         .user-dropdown {
             position: relative;
             display: inline-block;
-            width: 150px; /* Equilibra simétricamente el diseño con el logo */
-            text-align: right;
         }
 
-        /* El círculo del icono */
+        /* El círculo del avatar */
         .avatar-btn {
             background-color: #ffffff;
             color: #1a1a1a;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            display: inline-flex;
+            display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: background-color 0.3s;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
             border: none;
         }
 
@@ -96,26 +84,26 @@
             color: #ffffff;
         }
 
-        /* La cajita flotante con las opciones */
+        /* La cajita flotante con la opción de cerrar sesión */
         .dropdown-content {
             display: none;
             position: absolute;
             right: 0;
-            top: 45px;
+            top: 50px;
             background-color: #3d3d3d;
-            min-width: 140px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.5);
             border-radius: 4px;
             border-top: 3px solid #b91d1d;
-            z-index: 1000;
+            z-index: 99999;
         }
 
-        /* El botón de cerrar sesión dentro del menú desplegable */
+        /* Botón interno de cerrar sesión */
         .dropdown-content button {
             color: #ffffff;
             background: none;
             border: none;
-            padding: 12px 16px;
+            padding: 14px 16px;
             text-decoration: none;
             display: block;
             width: 100%;
@@ -131,28 +119,21 @@
         .dropdown-content button:hover {
             background-color: #b91d1d;
         }
-
-        /* Clase para mostrar el menú con JavaScript */
-        .show {
-            display: block;
-        }
     </style>
 </head>
 <body>
 
-    <div class="logo">ARJONA</div>
-
     <ul id="menuList">
-        <li><a href="introduccion.html" target="contenido" onclick="setActive(this)" class="active">Home</a></li>
-        <li><a href="biografia.html" target="contenido" onclick="setActive(this)">Biografía</a></li>
-        <li><a href="discografia.html" target="contenido" onclick="setActive(this)">Discografía</a></li>
-        <li><a href="galeria.html" target="contenido" onclick="setActive(this)">Galería</a></li>
-        <li><a href="poetica.html" target="contenido" onclick="setActive(this)">Poética</a></li>
-        <li><a href="equipo.html" target="contenido" onclick="setActive(this)">Equipo</a></li>
+        <li><a href="introduccion.html" target="contenido" onclick="setActive('home')" id="nav-home">Home</a></li>
+        <li><a href="biografia.html" target="contenido" onclick="setActive('bio')" id="nav-bio">Biografía</a></li>
+        <li><a href="discografia.html" target="contenido" onclick="setActive('disco')" id="nav-disco">Discografía</a></li>
+        <li><a href="galeria.html" target="contenido" onclick="setActive('galeria')" id="nav-galeria">Galería</a></li>
+        <li><a href="poetica.html" target="contenido" onclick="setActive('poetica')" id="nav-poetica">Poética</a></li>
+        <li><a href="equipo.html" target="contenido" onclick="setActive('equipo')" id="nav-equipo">Equipo</a></li>
     </ul>
 
     <div class="user-dropdown">
-        <button class="avatar-btn" onclick="toggleDropdown()">👤</button>
+        <button class="avatar-btn" id="avatarClick">👤</button>
         <div id="myDropdown" class="dropdown-content">
             <button onclick="logout()">Cerrar Sesión</button>
         </div>
@@ -163,40 +144,50 @@
         const SUPABASE_KEY = 'sb_publishable_OFv41HzOqNPVwWlmZHNOUQ_ojBYoFO0';
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // FUNCIÓN ACTIVA CORREGIDA: Cambia la selección visual al hacer clic sin importar los frames
-        function setActive(element) {
-            // Busca todos los enlaces en este documento y les quita la clase active
-            document.querySelectorAll('#menuList a').forEach(link => {
-                link.classList.remove('active');
-            });
-            // Se la agrega únicamente al elemento al que le diste clic
-            element.classList.add('active');
-        }
-
-        // Abrir y cerrar el menú desplegable del usuario
-        function toggleDropdown() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
-
-        // Cerrar el menú si el usuario hace clic afuera de él
-        window.onclick = function(event) {
-            if (!event.target.matches('.avatar-btn')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
+        // CONTROL DE PÁGINA SELECCIONADA (Mantiene el foco rojo en la página activa real)
+        function updateActiveLink() {
+            // Remueve la clase activa de todos los enlaces
+            document.querySelectorAll('#menuList a').forEach(link => link.classList.remove('active'));
+            
+            // Revisa qué página está guardada en la memoria del navegador
+            const currentPage = localStorage.getItem('activeNav') || 'home';
+            const activeElement = document.getElementById('nav-' + currentPage);
+            
+            if (activeElement) {
+                activeElement.classList.add('active');
             }
         }
 
-        // Función de salida corregida a nivel raíz (window.top)
+        function setActive(pageName) {
+            localStorage.setItem('activeNav', pageName);
+            updateActiveLink();
+        }
+
+        // Ejecuta la comprobación visual al cargar la barra de menú
+        document.addEventListener("DOMContentLoaded", updateActiveLink);
+
+        // INTERACCIÓN DEL DROPDOWN COREGIDA
+        const avatarBtn = document.getElementById('avatarClick');
+        const dropdownMenu = document.getElementById('myDropdown');
+
+        avatarBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Evita que el clic se pierda en los marcos
+            if (dropdownMenu.style.display === 'block') {
+                dropdownMenu.style.display = 'none';
+            } else {
+                dropdownMenu.style.display = 'block';
+            }
+        });
+
+        // Cierra el menú flotante si hacen clic en cualquier otra parte del menú
+        document.addEventListener('click', () => {
+            dropdownMenu.style.display = 'none';
+        });
+
+        // FUNCIÓN DE SALIDA DEFINITIVA
         async function logout() {
+            localStorage.removeItem('activeNav'); // Limpia la memoria del menú al salir
             await supabase.auth.signOut();
-            /* Usar window.top asegura romper la estructura de marcos por completo,
-               redirigiendo la pantalla completa del navegador de vuelta a index.html
-            */
             window.top.location.href = 'index.html'; 
         }
     </script>
